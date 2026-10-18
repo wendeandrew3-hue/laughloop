@@ -28,24 +28,6 @@
   </form>
 </div></div>
 
-<!-- checkout modal -->
-<div class="modal-backdrop" id="checkout-modal" hidden><div class="show-modal" role="dialog" aria-label="Checkout">
-  <div class="modal-head"><h2>Almost <em>front row.</em></h2><button class="close-modal" data-close="checkout-modal" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></div>
-  <p class="modal-description">Test mode: no live card charge. We record your order and the LaughLoop team emails you to confirm payment and tickets.</p>
-  <form class="show-form" id="checkout-form">
-    <label>Full name<input name="name" required maxlength="80"/></label>
-    <div class="form-two"><label>Email<input name="email" type="email" required maxlength="120"/></label><label>Phone<input name="phone" required maxlength="25" placeholder="+263…"/></label></div>
-    <div class="form-two"><label>Card number<input name="cardnumber" id="cc-num" inputmode="numeric" autocomplete="cc-number" required maxlength="23" placeholder="4242 4242 4242 4242"/></label><label>Expiry<input name="exp" id="cc-exp" required maxlength="7" placeholder="MM/YY"/></label></div>
-    <p class="storage-note">Only your card brand and last 4 digits are stored. The full number never leaves your browser.</p>
-    <button class="button button-yellow submit-show" type="submit" id="checkout-submit">Place order · <span id="checkout-amount">$0.00</span></button>
-  </form>
-</div></div>
-
-<!-- order success modal -->
-<div class="modal-backdrop" id="success-modal" hidden><div class="show-modal" role="dialog" aria-label="Order received">
-  <div class="empty-state"><div class="empty-icon">✳</div><h3>You’re in.</h3><p id="success-copy">Order received. Watch your email for confirmation.</p><button class="button button-yellow" data-close="success-modal">Back to the laughs</button></div>
-</div></div>
-
 <div class="toast" id="toast" hidden><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg><span id="toast-msg"></span></div>
 
 <script src="/app.js"></script></body></html>

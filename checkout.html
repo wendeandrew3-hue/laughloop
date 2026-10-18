@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Checkout | LaughLoop</title><meta name="description" content="Secure ticket checkout for LaughLoop live shows."/>
+<link rel="shortcut icon" href="/favicon.svg"/><link rel="icon" href="/favicon.svg"/>
+<link rel="preload" as="image" href="/images/laughaloop-logo.jpg"/>
+<style>
+:root{--ink:#171612;--paper:#f7f4ec;--card:#fcfaf6;--yellow:#ffc624;--yellow-ink:#b7900a;--muted:#7d786c;--line:#dcd7ca;--red:#b45641;
+--font-display:Georgia,"Times New Roman",serif;--font-sans:Arial,Helvetica,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-sans);line-height:1.5;min-height:100vh}
+a{color:inherit;text-decoration:none}
+.co-top{background:var(--ink);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:14px 5vw}
+.co-brand{display:flex;align-items:center;gap:10px}
+.co-brand img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--yellow)}
+.co-brand b{font-size:18px;font-weight:800}
+.co-brand small{display:block;font-size:9px;letter-spacing:.14em;color:var(--yellow);font-weight:700}
+.co-tag{font-size:11px;letter-spacing:.18em;font-weight:700;color:#fff;background:var(--yellow);color:var(--ink);padding:5px 10px;border-radius:4px}
+.co-main{display:grid;grid-template-columns:1fr 380px;gap:48px;max-width:1180px;margin:0 auto;padding:32px 5vw 72px}
+.co-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;margin-bottom:18px}
+.co-back:hover{text-decoration:underline}
+.eyebrow{font-size:11px;letter-spacing:.16em;font-weight:700;color:var(--muted)}
+.co-h1{font-size:clamp(30px,4.4vw,46px);font-weight:800;line-height:1.06;margin:8px 0 10px}
+.co-h1 em{font-family:var(--font-display);font-style:italic;color:var(--yellow-ink)}
+.co-sub{font-size:14px;color:var(--muted);max-width:520px}
+.stepper{display:flex;align-items:center;gap:14px;margin:26px 0 8px;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--muted)}
+.step i{font-style:normal;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:#fff;font-size:10px}
+.step.active i{background:var(--yellow);color:var(--ink)}
+.step-sep{flex:none;width:34px;height:2px;background:var(--line)}
+.section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px;margin-top:26px}
+.sec-head{display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:18px}
+.sec-num{color:var(--yellow-ink);font-weight:800;font-size:15px}
+.sec-head h2{font-size:19px;font-weight:800}
+.sec-sub{font-size:12.5px;color:var(--muted);margin:-10px 0 16px}
+.tix-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.tix-row:last-child{border-bottom:0}
+.tix-row h3{font-size:15px;font-weight:800}
+.tix-meta{font-size:12px;color:var(--muted);margin-top:2px}
+.tix-right{display:flex;align-items:center;gap:16px}
+.tix-price{font-weight:800;font-size:15px}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:8px;background:#fff}
+.qty button{border:0;background:none;font-size:16px;width:32px;height:32px;cursor:pointer;color:var(--ink)}
+.qty span{min-width:22px;text-align:center;font-weight:700;font-size:13px}
+.del{border:0;background:none;cursor:pointer;color:var(--muted);padding:4px}
+.del:hover{color:var(--red)}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.f2 > label:last-child:nth-child(odd){}
+label.f{display:block;font-size:12px;font-weight:700;margin:14px 0 6px}
+label.f span{color:var(--muted);font-weight:400}
+label.f input{width:100%;border:1px solid var(--line);border-radius:9px;background:#fff;padding:11px 13px;font:inherit;font-size:14px;color:var(--ink)}
+label.f input:focus{outline:2px solid var(--yellow);outline-offset:1px;border-color:var(--ink)}
+.card-logos{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 16px}
+.card-logo{border:1px solid var(--line);border-radius:6px;background:#fff;padding:6px 12px;font-size:11px;font-weight:800;letter-spacing:.04em}
+.card-logo.mc{display:flex;align-items:center;gap:6px;font-size:10px}
+.mc i{width:16px;height:16px;border-radius:50%;display:inline-block}
+.mc .l{background:#eb001b;margin-left:5px}.mc .r{background:#f79e1b;margin-left:-7px}
+.secure-box{border:1px solid var(--line);border-radius:12px;background:#fff;padding:18px;margin-top:6px}
+.secure-box h4{font-size:14px;font-weight:800}
+.secure-box p{font-size:12px;color:var(--muted);margin-top:6px}
+.info-banner{display:flex;gap:10px;background:#efe9d8;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:12.5px;margin:16px 0}
+.info-banner b{font-weight:800}
+.place-btn{display:flex;justify-content:center;align-items:center;gap:10px;width:100%;border:0;background:var(--yellow);color:var(--ink);font:inherit;font-weight:800;font-size:16px;padding:15px;border-radius:10px;cursor:pointer;margin-top:6px}
+.place-btn:hover{background:#ffd34d}
+.place-btn[disabled]{opacity:.6;cursor:wait}
+.foot-note{text-align:center;font-size:12px;color:var(--muted);margin-top:12px}
+/* sidebar */
+.co-side{position:sticky;top:20px;align-self:start;background:var(--ink);color:#fff;border-radius:16px;padding:22px;max-width:380px}
+.side-label{font-size:10px;letter-spacing:.18em;color:var(--yellow);font-weight:700}
+.side-cards{display:grid;gap:12px;margin:14px 0 18px}
+.side-card{border-radius:10px;padding:14px;position:relative;min-height:74px}
+.side-card .sc-top{font-size:9px;letter-spacing:.12em;font-weight:800}
+.side-card .sc-title{font-family:var(--font-display);font-size:19px;margin-top:6px}
+.side-card .sc-badge{position:absolute;top:10px;right:10px;background:var(--ink);color:#fff;font-size:9px;font-weight:800;border-radius:50%;width:38px;height:38px;display:grid;place-items:center}
+.side-line{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-bottom:1px solid #ffffff1a}
+.side-line.total{border-bottom:0;font-weight:800;font-size:15px;margin-top:6px}
+.side-line .amt{color:var(--yellow)}
+.side-fees{font-size:11px;color:#a7a297}
+.side-quote{margin-top:18px;font-family:var(--font-display);font-style:italic;font-size:14px;color:#fff;text-align:center}
+/* success */
+.done{max-width:520px;margin:8vh auto;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:44px 30px}
+.done .star{color:var(--yellow);font-size:30px}
+.done h2{font-family:var(--font-display);font-size:34px;margin:10px 0}
+.done p{color:var(--muted);font-size:14px}
+.done .button{display:inline-block;background:var(--yellow);color:var(--ink);font-weight:800;padding:13px 22px;border-radius:10px;margin-top:22px}
+.toast[hidden]{display:none}.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:26px;background:var(--ink);color:#fff;padding:12px 18px;border-radius:10px;font-size:13.5px;z-index:50;display:flex;gap:8px;align-items:center}
+.empty-cart{text-align:center;padding:60px 20px}
+.empty-cart a{color:var(--yellow-ink);font-weight:800}
+@media(max-width:900px){.co-main{grid-template-columns:1fr;gap:26px}.co-side{position:static;max-width:none}.f2{grid-template-columns:1fr}}
+</style></head>
+<body>
+<div class="co-top"><a class="co-brand" href="/"><img src="/images/laughaloop-logo.jpg" alt=""/><span><b>laughloop.</b><small>LIVE ENTERTAINMENT</small></span></a><span class="co-tag">TICKET CHECKOUT</span></div>
+
+<main class="co-main" id="co-main">
+  <div>
+    <a class="co-back" href="/#shows">← Back to the lineup</a>
+    <p class="eyebrow">YOUR NEXT GOOD NIGHT</p>
+    <h1 class="co-h1">Tickets to <em>the good stuff.</em></h1>
+    <p class="co-sub">Review your tickets and add the contact details for your order.</p>
+    <div class="stepper">
+      <span class="step active"><i>01</i> Tickets</span><span class="step-sep"></span>
+      <span class="step active"><i>02</i> Contact</span><span class="step-sep"></span>
+      <span class="step active"><i>03</i> Billing</span><span class="step-sep"></span>
+      <span class="step active"><i>04</i> Card</span>
+    </div>
+
+    <section class="section">
+      <div class="sec-head"><span class="sec-num">01</span><h2>Your tickets</h2></div>
+      <p class="sec-sub" id="tix-count">0 tickets in your order.</p>
+      <div id="tix-list"></div>
+    </section>
+
+    <form class="section" id="co-form" novalidate>
+      <div class="sec-head"><span class="sec-num">02</span><h2>Contact details</h2></div>
+      <p class="sec-sub">We’ll use these for your ticket order and receipt.</p>
+      <label class="f">Full name <span>(required)</span><input name="name" required maxlength="80" placeholder="Name on the booking"/></label>
+      <label class="f">Email address <span>(required)</span><input name="email" type="email" required maxlength="120" placeholder="you@example.com"/></label>
+      <label class="f">Phone number <span>(optional)</span><input name="phone" maxlength="25" placeholder="+1 555 123 4567"/></label>
+
+      <div class="sec-head" style="margin-top:26px"><span class="sec-num">03</span><h2>Billing address</h2></div>
+      <p class="sec-sub">Enter the address associated with the card.</p>
+      <label class="f">Name on billing address <span>(required)</span><input name="billing_name" required maxlength="80" placeholder="Full name"/></label>
+      <label class="f">Address line 1 <span>(required)</span><input name="address1" required maxlength="120" placeholder="Street address"/></label>
+      <label class="f">Address line 2 <span>(optional)</span><input name="address2" maxlength="120" placeholder="Apartment, suite, unit, etc."/></label>
+      <div class="f2">
+        <label class="f">City or town <span>(required)</span><input name="city" required maxlength="80" placeholder="City"/></label>
+        <label class="f">State, province, or region <span>(required)</span><input name="region" required maxlength="80" placeholder="Region"/></label>
+      </div>
+      <div class="f2">
+        <label class="f">Postal or ZIP code <span>(required)</span><input name="postal_code" required maxlength="20" placeholder="Postal code"/></label>
+        <label class="f">Country <span>(required)</span><input name="country" required maxlength="60" placeholder="Country"/></label>
+      </div>
+
+      <div class="sec-head" style="margin-top:26px"><span class="sec-num">04</span><h2>Card payment</h2></div>
+      <p class="sec-sub">Accepted cards for the secure checkout.</p>
+      <div class="card-logos">
+        <span class="card-logo">VISA</span>
+        <span class="card-logo" style="background:#006fcf;color:#fff">AMEX</span>
+        <span class="card-logo">Discover</span>
+        <span class="card-logo mc">payment<i><i class="l"></i><i class="r"></i></i>mastercard</span>
+      </div>
+      <div class="secure-box">
+        <h4>Secure card details</h4>
+        <label class="f">Card number<input name="cardnumber" id="cc-num" inputmode="numeric" autocomplete="cc-number" required maxlength="23" placeholder="4242 4242 4242 4242"/></label>
+        <div class="f2">
+          <label class="f">Expiry<input name="exp" id="cc-exp" required maxlength="7" placeholder="MM/YY"/></label>
+          <label class="f">CVC<input name="cvc" id="cc-cvc" inputmode="numeric" autocomplete="cc-csc" required maxlength="4" placeholder="123"/></label>
+        </div>
+        <p>Test-mode checkout: your order is recorded and the LaughLoop team confirms payment and tickets by email.</p>
+      </div>
+      <div class="info-banner"><span>▣</span><span><b>LaughLoop won’t receive or store raw card details.</b> Only your card brand and the last 4 digits are recorded with your order. The full number never leaves your browser.</span></div>
+      <button class="place-btn" id="place-btn" type="submit">Place order · <span id="place-amount">$0.00</span> <span>↗</span></button>
+      <p class="foot-note">Test mode: no live card charge. We record your order and the LaughLoop team emails you to confirm payment and tickets.</p>
+    </form>
+  </div>
+
+  <aside class="co-side">
+    <p class="side-label">YOUR ORDER</p>
+    <div class="side-cards" id="side-cards"></div>
+    <div id="side-lines"></div>
+    <div class="side-line total"><span>Estimated total</span><span class="amt" id="side-total">$0.00</span></div>
+    <p class="side-quote">Good nights are better together. Bring your people.</p>
+  </aside>
+</main>
+
+<div class="toast" id="toast" hidden><span id="toast-msg"></span></div>
+<script src="/checkout.js"></script>
+</body></html>

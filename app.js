@@ -1,4 +1,4 @@
-// LaughLoop client — cart, filters, modals, newsletter, show submissions, test-mode checkout
+// LaughLoop client — cart, filters, modals, newsletter, show submissions
 (() => {
   const $ = (s) => document.querySelector(s);
 
@@ -69,10 +69,10 @@
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
     closeCart();
-    ['show-modal', 'checkout-modal', 'success-modal'].forEach(closeModal);
+    closeModal('show-modal');
   });
   $('#cart-backdrop').addEventListener('click', (e) => { if (e.target.id === 'cart-backdrop') closeCart(); });
-  ['show-modal', 'checkout-modal', 'success-modal'].forEach(id => {
+  ['show-modal'].forEach(id => {
     $('#' + id).addEventListener('click', (e) => {
       if (e.target.id === id || e.target.closest('[data-close="' + id + '"]')) closeModal(id);
     });
@@ -135,50 +135,11 @@
     }
   });
 
-  // ---------- checkout (test mode) ----------
+  // ---------- checkout ----------
   $('#checkout-btn').onclick = () => {
     if (!qtyTotal()) return;
-    $('#checkout-amount').textContent = money(priceTotal() * 100);
-    closeCart(); openModal('checkout-modal');
+    location.href = '/checkout.html';
   };
-
-  // light card formatting, numbers never leave the browser beyond brand + last4
-  $('#cc-num').addEventListener('input', (e) => {
-    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
-  });
-  $('#cc-exp').addEventListener('input', (e) => {
-    let v = e.target.value.replace(/\D/g, '').slice(0, 4);
-    e.target.value = v.length > 2 ? v.slice(0, 2) + '/' + v.slice(2) : v;
-  });
-
-  $('#checkout-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const fd = new FormData(e.target);
-    const digits = String(fd.get('cardnumber') || '').replace(/\D/g, '');
-    if (digits.length < 12) { toast('Check the card number.'); return; }
-    const brand = digits.startsWith('4') ? 'Visa' : digits.startsWith('5') ? 'Mastercard' : digits.startsWith('3') ? 'Amex' : 'Card';
-    const items = Object.entries(cart).map(([id, q]) => ({ title: SHOWS[id].title, date: SHOWS[id].date, qty: q, price_cents: SHOWS[id].price * 100 }));
-    const body = {
-      name: fd.get('name'), email: fd.get('email'), phone: fd.get('phone'),
-      items, total_cents: priceTotal() * 100,
-      card: { brand, last4: digits.slice(-4), exp: fd.get('exp') }
-    };
-    const btn = $('#checkout-submit');
-    btn.disabled = true; btn.style.opacity = '.6';
-    try {
-      const r = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-      if (!r.ok) throw new Error();
-      const { reference } = await r.json();
-      cart = {}; save(); renderBadge();
-      closeModal('checkout-modal'); e.target.reset();
-      $('#success-copy').textContent = `Order ${reference} received. Watch your email — we’ll confirm payment and your tickets.`;
-      openModal('success-modal');
-    } catch {
-      toast('Order didn’t go through. Try again in a moment.');
-    } finally {
-      btn.disabled = false; btn.style.opacity = '';
-    }
-  });
 
   renderBadge();
 })();

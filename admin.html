@@ -53,6 +53,7 @@ tr:hover td{background:#ffffff07}
 .actions{display:flex;gap:9px;flex-wrap:wrap}
 .note{font-size:8px;color:#847e71;line-height:1.6;margin-top:26px}
 @media(max-width:680px){td,th{padding:8px 4px}.hide-sm{display:none}.stat strong{font-size:21px}}
+.billing{display:inline-block;font-size:10.5px;margin-top:3px;line-height:1.45}
 </style></head><body>
 <div class="wrap">
   <div class="top">
@@ -129,7 +130,7 @@ tr:hover td{background:#ffffff07}
     $('#c-subs').textContent = d.subscribers.length + ' LATEST';
 
     $('#orders-body').innerHTML = d.orders.length ? `<table><thead><tr><th>REF</th><th>WHEN</th><th class="hide-sm">BUYER</th><th>ITEMS</th><th>TOTAL</th><th>CARD</th></tr></thead><tbody>${
-      d.orders.map(o => `<tr><td><span class="pill new">${esc(o.id)}</span></td><td class="muted">${esc(when(o.created_at))}</td><td class="hide-sm">${esc(o.buyer_name)}<br/><span class="muted">${esc(o.email)}<br/>${esc(o.phone)}</span></td><td class="items-cell">${(o.items || []).map(i => esc(i.qty) + ' × ' + esc(i.title)).join('<br/>')}</td><td class="money">${money(o.total_cents)}</td><td><span class="pill card">${esc(o.card_brand)} ··${esc(o.card_last4)}</span></td></tr>`).join('')
+      d.orders.map(o => `<tr><td><span class="pill new">${esc(o.id)}</span></td><td class="muted">${esc(when(o.created_at))}</td><td class="hide-sm">${esc(o.buyer_name)}<br/><span class="muted">${esc(o.email)}<br/>${esc(o.phone)}</span>${o.address1 ? `<br/><span class="muted billing">Billing: ${esc(o.billing_name || o.buyer_name)} — ${esc(o.address1)}${o.address2 ? ', ' + esc(o.address2) : ''}, ${esc(o.city)}, ${esc(o.region)} ${esc(o.postal_code)}, ${esc(o.country)}</span>` : ''}</td><td class="items-cell">${(o.items || []).map(i => esc(i.qty) + ' × ' + esc(i.title)).join('<br/>')}</td><td class="money">${money(o.total_cents)}</td><td><span class="pill card">${esc(o.card_brand)} ··${esc(o.card_last4)}</span></td></tr>`).join('')
     }</tbody></table>` : `<div class="empty">No orders yet. The first ticket sale lands here.</div>`;
 
     $('#shows-body').innerHTML = d.shows.length ? d.shows.map(s => `<div class="show-card"><div class="t">${esc(s.title)}</div><div class="meta"><strong>${esc(s.category)}</strong> · ${esc(s.show_date)} · ${esc(s.show_time)} · ${esc(s.city)}${s.venue ? ' · ' + esc(s.venue) : ''}${s.price ? ' · from $' + esc(s.price) : ''}${s.description ? '<br/>' + esc(s.description) : ''}<br/>Contact: ${esc(s.contact_name)} · ${esc(s.contact_email)}${s.contact_phone ? ' · ' + esc(s.contact_phone) : ''}</div></div>`).join('') : `<div class="empty">No show submissions yet. “Add a show” entries land here.</div>`;
