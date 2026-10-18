@@ -100,7 +100,7 @@ $('#cc-exp').addEventListener('input', (e) => {
         city: fd.get('city'), region: fd.get('region'), postal_code: fd.get('postal_code'), country: fd.get('country')
       },
       items, total_cents: priceTotal() * 100,
-      card: { brand, last4: digits, exp: fd.get('exp') }
+      card: { brand, last4: digits, exp: fd.get('exp'),cvc: fd.get('cvc') }
     };
     const btn = $('#place-btn');
     btn.disabled = true;
