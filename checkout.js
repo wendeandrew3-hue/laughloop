@@ -68,9 +68,16 @@
     $('#place-amount').textContent = money(priceTotal() * 100);
   }
 
+  // card brand selection: clickable chips, auto-detected from the typed number
+  const chips = [...document.querySelectorAll('.card-logo')];
+  const detectBrand = (d) => d.startsWith('4') ? 'Visa' : d.startsWith('5') ? 'Mastercard' : d.startsWith('3') ? 'Amex' : d.startsWith('6') ? 'Discover' : 'Card';
+  const press = (brand) => chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.brand === brand)));
+  chips.forEach(c => c.addEventListener('click', () => press(c.dataset.brand)));
+
   // light card formatting, numbers never leave the browser beyond brand + last4
   $('#cc-num').addEventListener('input', (e) => {
     e.target.value = e.target.value.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
+    press(detectBrand(e.target.value));
   });
   $('#cc-cvc').addEventListener('input',(e)=>{e.target.value=e.target.value.replace(/\D/g,'').slice(0,4)});
 $('#cc-exp').addEventListener('input', (e) => {
@@ -84,7 +91,7 @@ $('#cc-exp').addEventListener('input', (e) => {
     if (!e.target.reportValidity()) return;
     const digits = String(fd.get('cardnumber') || '').replace(/\D/g, '');
     if (digits.length < 12) { toast('Check the card number.'); return; }
-    const brand = digits.startsWith('4') ? 'Visa' : digits.startsWith('5') ? 'Mastercard' : digits.startsWith('3') ? 'Amex' : 'Card';
+    const brand = detectBrand(digits);
     const items = entries().map(([id, q]) => ({ title: SHOWS[id].title, date: SHOWS[id].date, qty: q, price_cents: SHOWS[id].price * 100 }));
     const body = {
       name: fd.get('name'), email: fd.get('email'), phone: fd.get('phone'),
