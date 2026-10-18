@@ -1,0 +1,9 @@
+{
+  "name": "laughloop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LaughLoop — live comedy & shows site with admin panel",
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.0"
+  }
+}

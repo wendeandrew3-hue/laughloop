@@ -1,0 +1,158 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>LaughLoop · Admin</title><meta name="robots" content="noindex"/><link rel="icon" href="/favicon.svg"/><style>
+:root{--ink:#171612;--paper:#f7f4ec;--yellow:#ffc624;--line:#f7f4ec26;--font-display:Georgia,"Times New Roman",serif;--font-sans:Arial,Helvetica,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ink);color:var(--paper);font-family:var(--font-sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1060px;margin:0 auto;padding:34px 6% 70px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px;flex-wrap:wrap;gap:12px}
+.brand{display:flex;align-items:center;gap:9px}
+.brand-image{background:var(--yellow);border-radius:50%;width:44px;height:44px;display:grid;place-items:center;overflow:hidden}
+.brand-image img{width:45px;height:45px;object-fit:cover}
+.brand-name{font-size:20px;font-weight:900;letter-spacing:-1.3px;line-height:.92}
+.brand-name span{color:var(--yellow)}
+.brand-name small{display:block;font-size:7px;letter-spacing:.2em;color:#aaa69b;margin-top:7px;font-weight:400}
+.admin-tag{font-size:9px;letter-spacing:.18em;color:#b4b0a5;font-weight:800}
+h1{font-family:var(--font-display);font-size:clamp(34px,5vw,52px);font-weight:400;letter-spacing:-1px;line-height:1}
+h1 em{color:var(--yellow)}
+.sub{color:#979287;font-size:11px;line-height:1.7;margin:14px 0 26px;max-width:420px}
+label{display:grid;gap:6px;font-size:9px;font-weight:800;color:#b9b4a6;letter-spacing:.08em}
+input{background:transparent;border:1px solid #ffffff45;border-radius:3px;color:var(--paper);height:46px;padding:0 13px;font-size:13px;outline:none}
+input:focus{border-color:var(--yellow)}
+.gate{display:grid;gap:12px;max-width:330px}
+button{cursor:pointer;font:inherit;color:inherit;background:none;border:0}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--yellow);color:#191710;border-radius:3px;padding:14px 18px;font-size:11px;font-weight:800;transition:all .2s}
+.btn:hover{background:#ffd759;transform:translateY(-2px)}
+.btn.ghost{border:1px solid #ffffff45;color:var(--paper);background:transparent}
+.btn.ghost:hover{color:var(--ink);background:var(--yellow);border-color:var(--yellow);transform:none}
+.err{color:#e88a6a;font-size:10px;min-height:14px}
+/* dashboard */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:8px 0 30px}
+.stat{border:1px solid #ffffff1a;border-radius:4px;padding:16px}
+.stat p{font-size:8px;letter-spacing:.15em;color:#979287;font-weight:800;margin-bottom:8px}
+.stat strong{font-size:26px;font-weight:900;letter-spacing:-1px}
+section{margin-bottom:36px}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.sec-head h2{font-family:var(--font-display);font-weight:400;font-size:24px}
+.sec-head span{font-size:9px;color:#8b8679;letter-spacing:.12em;font-weight:800}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{text-align:left;font-size:8px;letter-spacing:.15em;color:#8b8679;padding:9px 8px;border-bottom:1px solid #ffffff26}
+td{padding:10px 8px;border-bottom:1px solid #ffffff12;vertical-align:top}
+tr:hover td{background:#ffffff07}
+.pill{display:inline-block;font-size:8px;font-weight:900;letter-spacing:.1em;padding:3px 7px;border-radius:99px}
+.pill.new{background:var(--yellow);color:#211c0d}
+.pill.card{border:1px solid #ffffff3d;color:#c7c3b8}
+.items-cell{color:#b6b1a4;line-height:1.5}
+.muted{color:#8b8679}
+.money{font-weight:900;white-space:nowrap}
+.subs{display:flex;flex-wrap:wrap;gap:8px}
+.sub-chip{border:1px solid #ffffff26;border-radius:99px;padding:7px 13px;font-size:11px}
+.show-card{border:1px solid #ffffff1a;border-radius:4px;padding:15px;margin-bottom:10px;display:grid;gap:6px}
+.show-card .t{font-family:var(--font-display);font-size:18px}
+.show-card .meta{color:#979287;font-size:10px;line-height:1.6}
+.empty{border:1px dashed #ffffff2e;text-align:center;padding:34px;color:#8b8679;font-size:11px}
+.actions{display:flex;gap:9px;flex-wrap:wrap}
+.note{font-size:8px;color:#847e71;line-height:1.6;margin-top:26px}
+@media(max-width:680px){td,th{padding:8px 4px}.hide-sm{display:none}.stat strong{font-size:21px}}
+</style></head><body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="/"><span class="brand-image"><img src="/images/laughloop-logo.jpg" alt=""/></span><span class="brand-name">laughloop<span>.</span><small>LIVE ENTERTAINMENT</small></span></a>
+    <span class="admin-tag">ADMIN PANEL</span>
+  </div>
+
+  <!-- gate -->
+  <div id="gate">
+    <h1>Who’s <em>running</em> the room?</h1>
+    <p class="sub">Enter the admin password to see orders, subscribers and show submissions.</p>
+    <form class="gate" id="gate-form">
+      <label>Admin password<input type="password" id="pw" autocomplete="current-password" required/></label>
+      <p class="err" id="gate-err"></p>
+      <button class="btn" type="submit">Open the books</button>
+    </form>
+  </div>
+
+  <!-- dashboard -->
+  <div id="dash" hidden>
+    <div class="top" style="margin-bottom:26px">
+      <h1>What the <em>room</em> is saying.</h1>
+      <div class="actions">
+        <button class="btn ghost" id="refresh-btn">Refresh</button>
+        <button class="btn ghost" id="logout-btn">Log out</button>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><p>ORDERS</p><strong id="s-orders">0</strong></div>
+      <div class="stat"><p>TICKET REVENUE</p><strong id="s-rev">$0</strong></div>
+      <div class="stat"><p>SUBSCRIBERS</p><strong id="s-subs">0</strong></div>
+      <div class="stat"><p>SHOW SUBMISSIONS</p><strong id="s-shows">0</strong></div>
+    </div>
+
+    <section>
+      <div class="sec-head"><h2>Orders</h2><span id="c-orders"></span></div>
+      <div id="orders-body"></div>
+    </section>
+
+    <section>
+      <div class="sec-head"><h2>Show submissions</h2><span id="c-shows"></span></div>
+      <div id="shows-body"></div>
+    </section>
+
+    <section>
+      <div class="sec-head"><h2>Newsletter subscribers</h2><span id="c-subs"></span></div>
+      <div id="subs-body"></div>
+    </section>
+
+    <p class="note">Test-mode checkout: card numbers are never stored, only brand and last 4 digits. Data lives in a dedicated Neon Postgres database and survives restarts.</p>
+  </div>
+</div>
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const money = (c) => '$' + ((c || 0) / 100).toFixed(2);
+  const esc = (s) => String(s || '').replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const when = (t) => t ? new Date(t).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' }) : '';
+
+  async function load() {
+    const r = await fetch('/api/admin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: sessionStorage.getItem('ll-pw') }) });
+    if (r.status === 401) { sessionStorage.removeItem('ll-pw'); throw 401; }
+    if (!r.ok) throw 500;
+    return r.json();
+  }
+
+  function render(d) {
+    $('#s-orders').textContent = d.totals.orders;
+    $('#s-rev').textContent = money(d.totals.revenue_cents);
+    $('#s-subs').textContent = d.totals.subscribers;
+    $('#s-shows').textContent = d.totals.shows;
+    $('#c-orders').textContent = d.orders.length + ' LATEST';
+    $('#c-shows').textContent = d.shows.length + ' LATEST';
+    $('#c-subs').textContent = d.subscribers.length + ' LATEST';
+
+    $('#orders-body').innerHTML = d.orders.length ? `<table><thead><tr><th>REF</th><th>WHEN</th><th class="hide-sm">BUYER</th><th>ITEMS</th><th>TOTAL</th><th>CARD</th></tr></thead><tbody>${
+      d.orders.map(o => `<tr><td><span class="pill new">${esc(o.id)}</span></td><td class="muted">${esc(when(o.created_at))}</td><td class="hide-sm">${esc(o.buyer_name)}<br/><span class="muted">${esc(o.email)}<br/>${esc(o.phone)}</span></td><td class="items-cell">${(o.items || []).map(i => esc(i.qty) + ' × ' + esc(i.title)).join('<br/>')}</td><td class="money">${money(o.total_cents)}</td><td><span class="pill card">${esc(o.card_brand)} ··${esc(o.card_last4)}</span></td></tr>`).join('')
+    }</tbody></table>` : `<div class="empty">No orders yet. The first ticket sale lands here.</div>`;
+
+    $('#shows-body').innerHTML = d.shows.length ? d.shows.map(s => `<div class="show-card"><div class="t">${esc(s.title)}</div><div class="meta"><strong>${esc(s.category)}</strong> · ${esc(s.show_date)} · ${esc(s.show_time)} · ${esc(s.city)}${s.venue ? ' · ' + esc(s.venue) : ''}${s.price ? ' · from $' + esc(s.price) : ''}${s.description ? '<br/>' + esc(s.description) : ''}<br/>Contact: ${esc(s.contact_name)} · ${esc(s.contact_email)}${s.contact_phone ? ' · ' + esc(s.contact_phone) : ''}</div></div>`).join('') : `<div class="empty">No show submissions yet. “Add a show” entries land here.</div>`;
+
+    $('#subs-body').innerHTML = d.subscribers.length ? `<div class="subs">${d.subscribers.map(s => `<span class="sub-chip">${esc(s.email)} <span class="muted">· ${esc(when(s.created_at))}</span></span>`).join('')}</div>` : `<div class="empty">No subscribers yet.</div>`;
+  }
+
+  async function openDash() {
+    try { const d = await load(); render(d); $('#gate').hidden = true; $('#dash').hidden = false; }
+    catch (e) { if (e === 401) { $('#gate-err').textContent = 'Wrong password. Try again.'; sessionStorage.removeItem('ll-pw'); } }
+  }
+
+  $('#gate-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    sessionStorage.setItem('ll-pw', $('#pw').value);
+    $('#gate-err').textContent = '';
+    await openDash();
+    $('#pw').value = '';
+  });
+  $('#refresh-btn').onclick = openDash;
+  $('#logout-btn').onclick = () => { sessionStorage.removeItem('ll-pw'); $('#dash').hidden = true; $('#gate').hidden = false; };
+
+  if (sessionStorage.getItem('ll-pw')) openDash();
+})();
+</script>
+</body></html>
