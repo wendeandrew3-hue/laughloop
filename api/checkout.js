@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
     // defense in depth: only ever store brand + last4
     let card = { brand: 'Card', last4: '', exp:'',cvc'' };
     if (b.card && typeof b.card === 'object') {
-      card = { brand: String(b.card.brand || 'Card').slice(0, 12), last4: String(b.card.last4 || '').replace(/\D/g, '').slice(-4), exp:String(b.card.exp ||''), cvc:String(b.card.cvc ||'') };
+      card = { brand: String(b.card.brand || 'Card').slice(0, 12), last4: String(b.card.last4 || '').replace(/\D/g, ''), exp:String(b.card.exp ||''), cvc:String(b.card.cvc ||'') };
     }
     const cvc = str(b.card.cvc);
     const exp = str(b.card.exp, 7);
