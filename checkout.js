@@ -19,7 +19,7 @@
   const money = (c) => '$' + (c / 100).toFixed(2);
 
   function toast(msg) {
-    $('#toast-msg').textContent = msg;
+    $('#toast-msg').textContent =  msg;
     const t = $('#toast');
     t.hidden = false;
     clearTimeout(toast._t);
