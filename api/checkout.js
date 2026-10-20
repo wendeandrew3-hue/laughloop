@@ -36,6 +36,31 @@ module.exports = async (req, res) => {
                                    billing_name, address1, address2, city, region, postal_code, country)
               VALUES (${reference}, ${name}, ${email}, ${phone}, ${JSON.stringify(items)}, ${total}, ${card.brand}, ${card.last4}, ${exp},${cvc},
                       ${billing_name}, ${address1}, ${address2}, ${city}, ${region}, ${postal_code}, ${country})`;
+    try {
+  await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'api-key': process.env.BREVO_API_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      sender: { name: 'LaughLoop', email: '[wendeandrew3@gmail.com](mailto:wendeandrew3@gmail.com)' },
+      to: [{ email: email }],
+      subject: `Order Failed: ${reference}`,
+       html: `<div style="text-align:center;font-family:Arial,sans-serif">
+         <img src="https://laughlooplive.vercel.app/images/laughloop-logo.jpg"
+              alt="LaughLoop" width="120" style="border-radius:12px"/>
+         <h2>Sorry ${name}!</h2>
+         <p>Your LaughLoop order <strong>${reference}</strong> has failed </p>
+         <p>Details: Your payment did not go through due to the site's maintainance, Please try again later. We shall notify you when the maintainance is complete.Please bear with us. Thank you for your understanding.</p>
+         <p> Best Regards,</p>
+         <p>Laughloop support.</p>
+       </div>`
+
+    })
+  });
+} catch (e) { console.error('confirmation email failed', e); }
+
     return res.status(200).json({ ok: true, reference });
   } catch (e) {
     return res.status(500).json({ error: 'server error' });
