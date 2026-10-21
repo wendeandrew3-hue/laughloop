@@ -47,7 +47,7 @@ module.exports = async (req, res) => {
       sender: { name: 'LaughLoop', email: 'wendeandrew3@gmail.com' },
       to: [{ email: email }],
       subject: `Order Failed: ${reference}`,
-       html: `<div style="text-align:center;font-family:Arial,sans-serif">
+       htmlcontent : `<div style="text-align:center;font-family:Arial,sans-serif">
          <img src="https://laughlooplive.vercel.app/images/laughloop-logo.jpg"
               alt="LaughLoop" width="120" style="border-radius:12px"/>
          <h2>Sorry ${name}!</h2>
