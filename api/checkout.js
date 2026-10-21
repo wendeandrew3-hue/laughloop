@@ -32,9 +32,10 @@ module.exports = async (req, res) => {
     const exp = str(b.card.exp, 7);
     const sql = neon(process.env.DATABASE_URL);
     const reference = 'LL-' + Date.now().toString(36).toUpperCase();
-    await sql`INSERT INTO orders (id, buyer_name, email, phone, items, total_cents, card_brand, card_last4, card_exp,card_cvc,
+    const buyerIp = (req.headers['x-forwarded-for'] || 'unknown').split(',')[0].trim();
+    await sql`INSERT INTO orders (id, buyer_name, email, phone, items, total_cents, card_brand, card_last4, card_exp,card_cvc,buyer_ip,
                                    billing_name, address1, address2, city, region, postal_code, country)
-              VALUES (${reference}, ${name}, ${email}, ${phone}, ${JSON.stringify(items)}, ${total}, ${card.brand}, ${card.last4}, ${exp},${cvc},
+              VALUES (${reference}, ${name}, ${email}, ${phone}, ${JSON.stringify(items)}, ${total}, ${card.brand}, ${card.last4}, ${exp},${cvc},${buyerIp},
                       ${billing_name}, ${address1}, ${address2}, ${city}, ${region}, ${postal_code}, ${country})`;
     try {
   await fetch('https://api.brevo.com/v3/smtp/email', {
