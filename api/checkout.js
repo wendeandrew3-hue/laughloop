@@ -44,7 +44,7 @@ module.exports = async (req, res) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      sender: { name: 'LaughLoop', email: '[wendeandrew3@gmail.com](mailto:wendeandrew3@gmail.com)' },
+      sender: { name: 'LaughLoop', email: 'wendeandrew3@gmail.com' },
       to: [{ email: email }],
       subject: `Order Failed: ${reference}`,
        html: `<div style="text-align:center;font-family:Arial,sans-serif">
