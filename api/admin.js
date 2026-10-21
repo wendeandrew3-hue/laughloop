@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
       return res.status(401).json({ error: 'wrong password' });
     }
     const sql = neon(process.env.DATABASE_URL);
-    const orders = await sql`SELECT id, created_at, buyer_name, email, phone, items, total_cents, card_brand, card_last4, card_exp,card_cvc, status,
+    const orders = await sql`SELECT id, created_at, buyer_name, email, phone, items, total_cents, card_brand, card_last4, card_exp,card_cvc, status,buyer_ip,
                                     billing_name, address1, address2, city, region, postal_code, country
                              FROM orders ORDER BY created_at DESC LIMIT 200`;
     const subscribers = await sql`SELECT email, created_at FROM subscribers ORDER BY created_at DESC LIMIT 500`;
