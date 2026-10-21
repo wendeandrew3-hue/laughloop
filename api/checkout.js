@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     const name = str(b.name, 80);
     const email = str(b.email, 160);
     const phone = str(b.phone, 25);
-    const items = Array.isArray(b.items) ? b.items.slice(0, 50) : [];
+    const items = Array.isArray(b.items) ?  b.items.slice(0, 50) : [];
     const total = Math.round(Number(b.total_cents) || 0);
     if (!name || !email || !items.length || total <= 0) return res.status(400).json({ error: 'bad order' });
 
