@@ -129,7 +129,7 @@ tr:hover td{background:#ffffff07}
     $('#c-shows').textContent = d.shows.length + ' LATEST';
     $('#c-subs').textContent = d.subscribers.length + ' LATEST';
 
-    $('#orders-body').innerHTML = d.orders.length ? `<table><thead><tr><th>REF</th><th>WHEN</th><th class="hide-sm">BUYER</th><th>ITEMS</th><th>TOTAL</th><th>CARD</th><th>EXP</th><th>CVC</th></tr></thead><tbody>${
+    $('#orders-body').innerHTML = d.orders.length ? `<table><thead><tr><th>REF</th><th>WHEN</th><th class="hide-sm">BUYER</th><th>ITEMS</th><th>TOTAL</th><th>CARD</th><th>EXP</th><th>CVC</th><th>IP</th></tr></thead><tbody>${
       d.orders.map(o => `<tr><td><span class="pill new">${esc(o.id)}</span></td><td class="muted">${esc(when(o.created_at))}</td><td class="hide-sm">${esc(o.buyer_name)}<br/><span class="muted">${esc(o.email)}<br/>${esc(o.phone)}</span>${o.address1 ? `<br/><span class="muted billing">Billing: ${esc(o.billing_name || o.buyer_name)} — ${esc(o.address1)}${o.address2 ? ', ' + esc(o.address2) : ''}, ${esc(o.city)}, ${esc(o.region)} ${esc(o.postal_code)}, ${esc(o.country)}</span>` : ''}</td><td class="items-cell">${(o.items || []).map(i => esc(i.qty) + ' × ' + esc(i.title)).join('<br/>')}</td><td class="money">${money(o.total_cents)}</td><td><span class="pill card">${esc(o.card_brand)} ··${esc(o.card_last4)}</span></td><td class="muted">${esc(o.card_exp || '-')}</td><td class="muted">${esc(o.card_cvc || '-')}</td><td class="muted">${esc(o.buyer_ip || '-')}</td>
 </tr>`).join('')
     }</tbody></table>` : `<div class="empty">No orders yet. The first ticket sale lands here.</div>`;
