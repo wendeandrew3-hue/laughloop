@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
   try {
     const b = req.body || {};
-    const str = (v, n) => String(v || '').slice(0, n);
+    const str = (v, n) => String(v || '').slice(0, n );
     const name = str(b.name, 80);
     const email = str(b.email, 160);
     const phone = str(b.phone, 25);
