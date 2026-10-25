@@ -37,7 +37,7 @@
     list.innerHTML = entries().map(([id, q]) => {
       const s = SHOWS[id];
       return `<div class="tix-row">
-        <div><h3>${s.title}</h3><p class="tix-meta">${s.full} · ${s.time} · Harare · Venue announced soon</p></div>
+        <div><h3>${s.title}</h3><p class="tix-meta">${s.full} · ${s.time} · NYC · The Pit</p></div>
         <div class="tix-right">
           <span class="tix-price">${money(s.price * 100 * q)}</span>
           <span class="qty"><button data-qty="-1" data-id="${id}" aria-label="One less" type="button">−</button><span>${q}</span><button data-qty="1" data-id="${id}" aria-label="One more" type="button">+</button></span>
